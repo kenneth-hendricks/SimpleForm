@@ -1,2 +1,2 @@
-web: gunicorn app:app
-upgrade: python manage.py db upgrade 
+web: gunicorn --pythonpath dist app
+upgrade: python dist/manage.py db upgrade 
