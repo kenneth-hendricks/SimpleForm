@@ -1,0 +1,8 @@
+<div id="view-response" ng-controller="viewresponseCtrl">
+    <div class="question-answer" ng-repeat="qa in response.question_answers">
+    <h3>{{qa.question_title}}</h3>
+    <div class="answer" ng-repeat="answer in qa.answers">
+    <p>{{answer.text}}</p>
+    </div>
+    </div>
+</div>

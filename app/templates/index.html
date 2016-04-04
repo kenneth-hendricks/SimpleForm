@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SimpleForm</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="../static/css/styles.css">
+  </head>
+  <body ng-app="simpleformsApp">
+    <div class="container">
+      
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">SimpleForm</a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li><a ui-sref="create_form">Create Form</a></li>
+            <li><a ui-sref="view_forms">View Forms</a></li>
+            <li><a ui-sref="analyse_responses">Analyse Responses</a></li>
+          </ul>
+        </div>
+      </nav>
+      
+      <div ui-view></div>
+
+    </div>
+    
+    <script src="../static/js/vendor/jquery.js"></script>
+    <script src="../static/js/vendor/angular.js"></script>
+    <script src="../static/js/vendor/angular-ui-router.js"></script>
+    <script src="../static/js/vendor/bootstrap.js"></script>
+    <script src="../static/js/app.js"></script>
+    <script src="../static/js/controllers.js"></script>
+  </body>
+</html>

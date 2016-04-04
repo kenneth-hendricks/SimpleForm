@@ -1,0 +1,33 @@
+#create-form .row {
+  margin: 10px 10px; }
+
+#create-form .new-form {
+  border: 1px dashed black;
+  padding-right: 10px;
+  padding-top: 10px; }
+
+#create-form textarea {
+  resize: vertical; }
+
+#create-form .question {
+  border: 1px dashed black;
+  margin-bottom: 10px; }
+  #create-form .question h3 {
+    margin: 0px 0px; }
+
+#create-form .question-buttons button {
+  margin-bottom: 10px; }
+
+#create-form .options .input-group {
+  margin-bottom: 10px; }
+
+#view-forms .nav {
+  max-height: 500px;
+  overflow: scroll;
+  border: 1px dashed black; }
+
+#view-forms textarea {
+  resize: vertical; }
+
+#create-response .form-header {
+  border-bottom: 1px solid black; }
