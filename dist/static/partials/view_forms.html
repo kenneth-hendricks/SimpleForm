@@ -1,0 +1,90 @@
+<div id="view-forms" ng-controller="viewformsCtrl">
+    <div class="row">
+        <div class ="col-md-3">
+            <ul class="nav nav-pills nav-stacked">
+                <h4>Current Forms:</h4>
+                <li ng-repeat="form in forms" ng-class="{active: isActiveForm($index)}" ng-click="setActiveForm($index)"><a href="javascript:void(0);">{{form.title}}</a></li>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <div class="form" ng-repeat="form in forms" ng-show="isActiveForm($index)">
+                <h3>{{form.title}}</h3>
+                <p>{{form.description}}</p>
+                <a ui-sref="create_response({formId: form.id})">Form Link</a>
+                
+                <h4> Form Responses: </h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Created</th>
+                            <th>View Response</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="response in form.responses">
+                            <th scope="row">1</th>
+                            <td>{{response.created_date}}</td>
+                            <td>
+                                <button type="button" class="btn btn-default" ui-sref="view_response({responseId: response.id})">View Response</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#previewModal{{$index}}">Preview Form</button>
+                <button type="button" class="btn btn-danger" ng-click="deleteForm($index)">Delete Form</button>
+                <div class="modal fade" id="previewModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                <span>&times;</span>
+                                </button>
+                                <h4>{{form.title}}</h4>
+                                <p>{{form.description}}</p>
+                            </div>
+                            <div class="modal-body">
+                                <div class="question" ng-repeat="question in form.questions">
+                                    <h5>{{$index + 1}}. {{question.title}}<h5>
+                                    
+                                    <div class="text-question" ng-show="question.type === 'Text'">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="paragraph-question" ng-show="question.type === 'Paragraph'">
+                                        <textarea class="form-control"></textarea>
+                                    </div>
+                                    <div class="multiple-choice-question" ng-show="question.type === 'Multiple Choice'">
+                                        <div class="radio" ng-repeat="option in question.options">
+                                            <label><input type="radio" name="optionsRadios" value="{{option.text}}" checked>{{option.text}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="check-box-question" ng-show="question.type === 'Check Box'">
+                                        <div class="checkbox" ng-repeat="option in question.options">
+                                            <label><input type="checkbox" value="{{option.text}}">{{option.text}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-question" ng-show="question.type === 'Dropdown'">
+                                        <div class="dropdown">
+                                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                            Select an option
+                                            <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="javascript:void(0);" data-value="{{option.text}}" ng-repeat="option in question.options">{{option.text}}</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+</div>
