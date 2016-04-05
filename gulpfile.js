@@ -27,7 +27,6 @@ gulp.task('usemin', function () {
 
 gulp.task('copyFiles', function () {
     gulp.src('app/*.py').pipe(gulp.dest('dist/'));
-    gulp.src('app/migrations/**/*').pipe(gulp.dest('dist/migrations'));
     gulp.src('app/static/fonts/*').pipe(gulp.dest('dist/static/fonts'));
     gulp.src('app/static/partials/*').pipe(gulp.dest('dist/static/partials'));
 
