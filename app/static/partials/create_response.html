@@ -1,40 +1,40 @@
 <div id="create-response" ng-controller="createresponseCtrl">
     <div class="row">
         <div class="col-md-6 col-md-offset-3 well">
-            <div class="form-header">
-                <h1>{{form.title}}</h1>
-                <p>{{form.description}}<p>
-                </div>
-                <div class="form-body">
-                    <div class="question" ng-repeat="question in form.questions">
-                        <h5>{{$index + 1}}. {{question.title}}<h5>
-                        
-                        <div class="text-question" ng-show="question.type === 'Text'">
-                            <input type="text" class="form-control" ng-model="response.answers[$index].textArray[0]">
-                        </div>
-                        <div class="paragraph-question" ng-show="question.type === 'Paragraph'">
-                            <textarea class="form-control" ng-model="response.answers[$index].textArray[0]"></textarea>
-                        </div>
-                        <div class="multiple-choice-question" ng-show="question.type === 'Multiple Choice'">
-                            <div class="radio" ng-repeat="option in question.options">
-                                <label><input type="radio" value="{{option.text}}" ng-model="response.answers[$parent.$index].textArray[0]">{{option.text}}</label>
+            <form name="newResponse" ng-submit="submitResponse()">
+                <div class="form-header">
+                    <h1>{{form.title}}</h1>
+                    <p>{{form.description}}<p>
+                    </div>
+                    <div class="form-body">
+                        <div class="question" ng-repeat="question in form.questions">
+                            <h5>{{$index + 1}}. {{question.title}}<h5>
+                            
+                            <div class="text-question" ng-show="question.type === 'Text'">
+                                <input type="text" class="form-control" ng-model="response.answers[$index].textArray[0]">
                             </div>
-                        </div>
-                        <div class="check-box-question" ng-show="question.type === 'Check Box'">
-                            <div class="checkbox" ng-repeat="option in question.options">
-                                <label><input type="checkbox"  ng-click="checkboxChange($parent.$index, $index)">{{option.text}}</label>
+                            <div class="paragraph-question" ng-show="question.type === 'Paragraph'">
+                                <textarea class="form-control" ng-model="response.answers[$index].textArray[0]"></textarea>
                             </div>
-                        </div>
-                        <div class="dropdown-question" ng-show="question.type === 'Dropdown'">
-                            <select class="form-control" ng-model="response.answers[$index].textArray[0]">
-                                <option value="{{option.text}}" ng-repeat="option in question.options">{{option.text}}</option>
-                            </select>
+                            <div class="multiple-choice-question" ng-show="question.type === 'Multiple Choice'">
+                                <div class="radio" ng-repeat="option in question.options">
+                                    <label><input type="radio" value="{{option.text}}" ng-model="response.answers[$parent.$index].textArray[0]">{{option.text}}</label>
+                                </div>
+                            </div>
+                            <div class="check-box-question" ng-show="question.type === 'Check Box'">
+                                <div class="checkbox" ng-repeat="option in question.options">
+                                    <label><input type="checkbox"  ng-click="checkboxChange($parent.$index, $index)">{{option.text}}</label>
+                                </div>
+                            </div>
+                            <div class="dropdown-question" ng-show="question.type === 'Dropdown'">
+                                <select class="form-control" ng-model="response.answers[$index].textArray[0]">
+                                    <option value="{{option.text}}" ng-repeat="option in question.options">{{option.text}}</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <button type="button" class="btn btn-default pull-right" ng-click="submitResponse()">Submit</button>
+                    <button type="submit" class="btn btn-default pull-right">Submit</button>
+                </form>
             </div>
         </div>
-
-
     </div>

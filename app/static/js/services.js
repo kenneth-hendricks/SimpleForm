@@ -1,7 +1,15 @@
-simpleformsApp.service('viewformsService', function($http){
+simpleformsApp.service('LoginService', function($http){
+    var loggedIn = false;
+    this.loggedIn = function(){
+        return loggedIn;
+    };
 
-    this.getForms = function(){
-        return $http.get('/forms');
+    this.logIn = function(){
+        loggedIn = true; 
+    };
+
+    this.logOut = function(){
+        loggedIn = false; 
     };
 
 });

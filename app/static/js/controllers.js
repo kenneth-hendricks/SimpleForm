@@ -1,3 +1,18 @@
+simpleformsApp.controller('homeCtrl', function($scope, $http, $stateParams, LoginService) {
+    $scope.loggedIn = LoginService.loggedIn();
+
+    $scope.logIn = function(){
+        LoginService.logIn();
+        $scope.loggedIn = LoginService.loggedIn();
+    };
+
+    $scope.logOut = function(){
+        LoginService.logOut();
+        $scope.loggedIn = LoginService.loggedIn();
+    };
+});
+
+
 simpleformsApp.controller('createresponseCtrl', function($scope, $http, $stateParams) {
 
 
@@ -65,17 +80,22 @@ simpleformsApp.controller('viewresponseCtrl', function($scope, $http, $statePara
     $http.get('/response/' + $stateParams.responseId)
         .then(function successCallback(response) {
             $scope.response = response.data;
-        }, function errorCallback(response) {});
+        }, function errorCallback(response) {
+            console.log("error" + response);
+        });
 
 });
 
 
 
 simpleformsApp.controller('viewformsCtrl', function($scope, $http) {
+
     $http.get('/forms')
         .then(function successCallback(response) {
             $scope.forms = response.data.forms;
-        }, function errorCallback(response) {});
+        }, function errorCallback(response) {
+            console.log("error" + response);
+        });
 
     $scope.active_form = 0;
 
@@ -105,7 +125,7 @@ simpleformsApp.controller('viewformsCtrl', function($scope, $http) {
 
 });
 
-simpleformsApp.controller('createformCtrl', function($scope, $http) {
+simpleformsApp.controller('createformCtrl', function($scope, $http, $state) {
 
     $scope.form = {
         title: "Untitled Form",
@@ -166,12 +186,18 @@ simpleformsApp.controller('createformCtrl', function($scope, $http) {
         questions[questionIndex].options.push("");
     };
 
+    $scope.minimumOptions = function(questionIndex) {
+        if (questions[questionIndex].options.length == 1) {
+            return true;
+        }
+        return false;
+    };
+
     $scope.removeOption = function(questionIndex, optionIndex) {
         questions[questionIndex].options.splice(optionIndex, 1);
     };
 
     $scope.submitForm = function() {
-
         $http({
             method: 'POST',
             url: '/submit_form',
@@ -181,9 +207,8 @@ simpleformsApp.controller('createformCtrl', function($scope, $http) {
             }
         })
             .success(function(data) {
-                console.log(data);
+                $state.go("view_forms");
             });
-
 
     };
 

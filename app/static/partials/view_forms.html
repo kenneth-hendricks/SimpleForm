@@ -64,16 +64,11 @@
                                         </div>
                                     </div>
                                     <div class="dropdown-question" ng-show="question.type === 'Dropdown'">
-                                        <div class="dropdown">
-                                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                                            Select an option
-                                            <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="javascript:void(0);" data-value="{{option.text}}" ng-repeat="option in question.options">{{option.text}}</a></li>
-                                            </ul>
-                                        </div>
+                                        <select class="form-control">
+                                            <option value="{{option.text}}" ng-repeat="option in question.options">{{option.text}}</option>
+                                        </select>
                                     </div>
+
                                 </div>
                             </div>
                             <div class="modal-footer">
