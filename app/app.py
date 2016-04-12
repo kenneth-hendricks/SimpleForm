@@ -118,18 +118,18 @@ def submit_response():
     responseData = request.get_json()
     print responseData
     question_answers = []
-    for answerData in responseData['answers']:
+    for qaData in responseData['question_answers']:
         answers = []
-        for answerText in answerData['textArray']:
-            if answerText != "":
-                answer = Answer(answerText)
+        for answerData in qaData['answers']:
+            if answerData != "":
+                answer = Answer(answerData)
                 db.session.add(answer)
                 answers.append(answer)
 
         question_answer = QuestionAnswer(answers)
         db.session.add(question_answer)
         question_answers.append(question_answer)
-        Question.query.filter_by(id=answerData['questionId']).first().question_answers.append(question_answer)
+        Question.query.filter_by(id=qaData['questionId']).first().question_answers.append(question_answer)
 
     response = Response(question_answers)
     db.session.add(response)
