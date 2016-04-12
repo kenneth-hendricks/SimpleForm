@@ -5,31 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SimpleForm</title>
-
     <!-- build:css ../static/css/site.css -->
     <link rel="stylesheet" href="../static/css/bootstrap.css">
     <link rel="stylesheet" href="../static/css/bootstrap-theme.css">
     <link rel="stylesheet" href="../static/css/styles.css">
     <!-- endbuild -->
-
   </head>
   <body ng-app="simpleformsApp">
     <div class="container">
       
-      <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#">SimpleForm</a>
-          </div>
-          <ul class="nav navbar-nav">
-            <li><a ui-sref="create_form">Create Form</a></li>
-            <li><a ui-sref="view_forms">View Forms</a></li>
-          </ul>
-        </div>
-      </nav>
+    <div sf-nav></div>
       
       <div ui-view></div>
-
     </div>
     <!-- build:vendorJS ../static/js/vendor/vendor.js -->
     <script src="../static/js/vendor/jquery.js"></script>
@@ -42,7 +29,9 @@
     <script src="../static/js/app.js"></script>
     <script src="../static/js/services.js"></script>
     <script src="../static/js/controllers.js"></script>
-    <!-- endbuild -->
+    <script src="../static/js/controllers/navCtrl.js"></script>
 
+    <script src="../static/js/directives.js"></script>
+    <!-- endbuild -->
   </body>
 </html>

@@ -1,18 +1,84 @@
-from flask import Flask, render_template, request, send_file, jsonify
-from models import db, Form, User, Option, Question, Response, QuestionAnswer, Answer
+from flask import Flask, render_template, request, send_file, jsonify, session
+import flask.ext.login as flask_login
+from models import db, Form, User as User, Option, Question, Response, QuestionAnswer, Answer
+from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
 app = Flask(__name__)
+app.config.update(SEND_FILE_MAX_AGE_DEFAULT=0)
 db.init_app(app)
+login_manager = flask_login.LoginManager()
+login_manager.init_app(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+app.secret_key = "super secret key"
+
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
 @app.route('/')
 def index():
     return send_file("templates/index.html")
 
-@app.route('/forms', methods=['GET'])
-def forms():
-    forms = Form.query.all()
+@app.route('/current_user', methods=['GET'])
+def current_user():
+    session_user = flask_login.current_user
+    if session_user.is_authenticated:
+        user = User.query.get(session_user.get_id())
+        return jsonify(userData={'username': user.username, 'user_id': user.id})
+    else:
+        return "not logged in"
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    print session
+    flask_login.logout_user()
+    print session
+    return "success"
+    
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    userData = request.get_json()
+    user = User.query.filter_by(username = userData['username']).first()
+    if user and check_password_hash(user.password, userData['password']):
+        db.session.add(user)
+        db.session.commit()
+        flask_login.login_user(user) 
+        print session
+
+        return jsonify(userData={'username': user.username, 'user_id': user.id})
+    else:
+        return "failure"
+
+@app.route('/register_user', methods=['POST'])
+def register_user():
+    userData = request.get_json()
+
+    if User.query.filter_by(username = userData['username']).first():
+        return "username taken"
+    else:
+        user = User(userData['username'], generate_password_hash(userData['password']))
+        db.session.add(user)
+        db.session.commit()
+        return "success"
+
+@app.route('/recent_forms/<int:user_id>', methods=['GET'])
+def recent_forms(user_id):
+    recentForms = Form.query.filter_by(user_id=user_id).order_by(Form.created_date.desc()).limit(5).all()
+    return jsonify(forms=[f.serialize for f in recentForms])
+
+@app.route('/recent_responses/<int:user_id>', methods=['GET'])
+def recent_responses(user_id):
+    recentResponses = Response.query.filter(Response.form.has(user_id=user_id)).order_by(Response.created_date.desc()).limit(5).all()
+
+    return jsonify(responses=[r.serialize for r in recentResponses])
+
+
+@app.route('/forms/<int:user_id>', methods=['GET'])
+def forms(user_id):
+    forms = Form.query.filter_by(user_id=user_id).order_by(Form.created_date.desc()).all()
     return jsonify(forms=[f.serialize for f in forms])
 
 @app.route('/response/<int:response_id>', methods=['GET'])
@@ -62,6 +128,7 @@ def submit_response():
 @app.route('/submit_form', methods=['POST'])
 def submit_form():
     formData = request.get_json()
+    user = User.query.get(formData['user_id'])
     questions = []
     for questionData in formData['questions']:
         options = []
@@ -74,6 +141,7 @@ def submit_form():
         questions.append(question)    
     form = Form(formData['title'], formData['description'], questions)
     db.session.add(form)
+    user.forms.append(form)
     db.session.commit()
     return 'success'
 

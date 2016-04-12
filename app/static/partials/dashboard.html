@@ -1,0 +1,47 @@
+<div id="dashboard" ng-controller="dashboardCtrl">
+    <h1>Welcome {{user.username}}</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="well">
+                <h2>Recent Forms</h2>
+                <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Form</th>
+                                <th>Responses</th>
+                                <th>Created</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="form in recentForms">
+                                <th><a ui-sref="view_forms({formId: form.id})">{{form.title}}</a></th>
+                                <td>{{form.responses.length}}</td>
+                                <td>{{form.created_date}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="well">
+                <h2>Recent Responses</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Response</th>
+                                <th>Form</th>
+                                <th>Created</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="response in recentResponses">
+                                <th><a ui-sref="view_response({responseId: response.id})">Response</a></th>
+                                <td><a ui-sref="view_forms({formId: response.form_id})">{{response.form_title}}</a></td>
+                                <td>{{response.created_date}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+    </div>
+</div>
