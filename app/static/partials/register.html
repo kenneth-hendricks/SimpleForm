@@ -1,19 +1,19 @@
-<div id="register" ng-controller="registerCtrl">
+<div id="register">
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
             <h1 class="text-center">Please Sign Up</h1>
             <form name="register-form" ng-submit="register()" novalidate>
                 <div class="form-group">
                     <label class="sr-only">Username</label>
-                    <input type="text" class="form-control" ng-model="user.username" placeholder="Username" required>
+                    <input type="text" class="form-control" ng-model="username" placeholder="Username" required>
                 </div>
                 <div class="form-group">
                     <label class="sr-only">Password</label>
-                    <input type="password" class="form-control" ng-model="user.password" placeholder="Password" required>
+                    <input type="password" class="form-control" ng-model="password" placeholder="Password" required>
                 </div>
                 <div class="form-group">
                     <label class="sr-only">Confirm Password</label>
-                    <input type="password" class="form-control" ng-model="user.passwordConfirm" placeholder="Confirm Password" required>
+                    <input type="password" class="form-control" ng-model="passwordConfirm" placeholder="Confirm Password" required>
                 </div>
                 <div class="alert alert-danger" role="alert" ng-show="passwordMismatch">Passwords do not match</div>
                 <div class="alert alert-danger" role="alert" ng-show="usernameTaken">Username already used</div>

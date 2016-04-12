@@ -1,4 +1,4 @@
-simpleformsApp.controller('NavCtrl', function($scope, $http, $stateParams, LoginService) {
+simpleformsApp.controller('navCtrl', function($scope, LoginService) {
     $scope.loggedIn = LoginService.loggedIn;
     $scope.logout = LoginService.logout;
 });

@@ -64,22 +64,34 @@ def register_user():
         db.session.commit()
         return "success"
 
-@app.route('/recent_forms/<int:user_id>', methods=['GET'])
-def recent_forms(user_id):
+@app.route('/check_username', methods=['POST'])
+def check_username():
+    userData = request.get_json()
+    if User.query.filter_by(username = userData['username']).first():
+        return "used"
+    else:
+        return "unused"
+
+
+@app.route('/recent_forms', methods=['GET'])
+@flask_login.login_required
+def recent_forms():
+    user_id = flask_login.current_user.get_id()
     recentForms = Form.query.filter_by(user_id=user_id).order_by(Form.created_date.desc()).limit(5).all()
-    return jsonify(forms=[f.serialize for f in recentForms])
+    return jsonify(forms=[f.serialize_with_responses for f in recentForms])
 
-@app.route('/recent_responses/<int:user_id>', methods=['GET'])
-def recent_responses(user_id):
+@app.route('/recent_responses', methods=['GET'])
+@flask_login.login_required
+def recent_responses():
+    user_id = flask_login.current_user.get_id()
     recentResponses = Response.query.filter(Response.form.has(user_id=user_id)).order_by(Response.created_date.desc()).limit(5).all()
-
     return jsonify(responses=[r.serialize for r in recentResponses])
 
 
 @app.route('/forms/<int:user_id>', methods=['GET'])
 def forms(user_id):
     forms = Form.query.filter_by(user_id=user_id).order_by(Form.created_date.desc()).all()
-    return jsonify(forms=[f.serialize for f in forms])
+    return jsonify(forms=[f.serialize_with_responses for f in forms])
 
 @app.route('/response/<int:response_id>', methods=['GET'])
 def response(response_id):
@@ -88,11 +100,11 @@ def response(response_id):
         return jsonify(response.serialize)
     return "response not found"
 
-@app.route('/form/<int:form_id>', methods=['GET'])
-def form(form_id):
+@app.route('/get_form/<int:form_id>', methods=['GET'])
+def get_form(form_id):
     form = Form.query.filter_by(id=form_id).first()
     if form:
-        return jsonify(form.serialize)
+        return jsonify(form=form.serialize)
     return "form not found"
 
 @app.route('/delete_form/<int:form_id>', methods=['POST'])
@@ -104,6 +116,7 @@ def delete_form(form_id):
 @app.route('/submit_response', methods=['POST'])
 def submit_response():
     responseData = request.get_json()
+    print responseData
     question_answers = []
     for answerData in responseData['answers']:
         answers = []

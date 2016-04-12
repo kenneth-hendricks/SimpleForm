@@ -14,7 +14,8 @@ simpleformsApp.directive('sfQuestion', function() {
 
 simpleformsApp.directive('sfNav', function() {
   return {
-      restrict : "A",
-      templateUrl: '../static/partials/nav.html'
+      restrict : "E",
+      templateUrl: '../static/partials/nav.html',
+      controller: 'navCtrl'
   };
 });

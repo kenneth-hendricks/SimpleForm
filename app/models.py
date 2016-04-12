@@ -30,6 +30,16 @@ class Form(db.Model):
             'description': self.description,
             'created_date': self.created_date,
             'questions': self.serialize_questions,
+        }
+
+    @property
+    def serialize_with_responses(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'description': self.description,
+            'created_date': self.created_date,
+            'questions': self.serialize_questions,
             'responses': self.serialize_responses
         }
 

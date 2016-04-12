@@ -7,6 +7,7 @@ simpleformsApp.config(function($stateProvider, $urlRouterProvider, $httpProvider
         .state('dashboard', {
             url: "/",
             templateUrl: "../static/partials/dashboard.html",
+            controller: "dashboardCtrl",
             data: {
                 requireLogin: true
             }
@@ -38,6 +39,7 @@ simpleformsApp.config(function($stateProvider, $urlRouterProvider, $httpProvider
         .state('create_response', {
             url: "/create_response/:formId",
             templateUrl: "../static/partials/create_response.html",
+            controller: "createresponseCtrl",
             data: {
                 requireLogin: false
             }
@@ -45,6 +47,7 @@ simpleformsApp.config(function($stateProvider, $urlRouterProvider, $httpProvider
         .state('login', {
             url: "/login",
             templateUrl: "../static/partials/login.html",
+            controller: "loginCtrl",
             data: {
                 requireLogin: false
             }
@@ -52,6 +55,7 @@ simpleformsApp.config(function($stateProvider, $urlRouterProvider, $httpProvider
         .state('register', {
             url: "/register",
             templateUrl: "../static/partials/register.html",
+            controller: "registerCtrl",
             data: {
                 requireLogin: false
             }
