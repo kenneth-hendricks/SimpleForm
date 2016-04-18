@@ -7,7 +7,8 @@ class Form(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
     description = db.Column(db.String(500))
-    created_date = db.Column(db.DateTime)
+    created_date = db.Column(db.String)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     questions = db.relationship('Question', backref='form', lazy='dynamic')
     responses = db.relationship('Response', backref='form', lazy='dynamic')
 
@@ -23,6 +24,16 @@ class Form(db.Model):
 
     @property
     def serialize(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'description': self.description,
+            'created_date': self.created_date,
+            'questions': self.serialize_questions,
+        }
+
+    @property
+    def serialize_with_responses(self):
         return {
             'id': self.id,
             'title': self.title,
@@ -58,7 +69,10 @@ class Response(db.Model):
         return {
             'id': self.id,
             'created_date': self.created_date,
-            'question_answers': self.serialize_question_answers
+            'question_answers': self.serialize_question_answers,
+            'form_id': self.form_id,
+            'form_title': Form.query.filter_by(id=self.form_id).first().title,
+            'form_description': Form.query.filter_by(id=self.form_id).first().description
         }
 
     @property
@@ -161,12 +175,43 @@ class Option(db.Model):
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True)
-    email = db.Column(db.String(120), unique=True)
+    password = db.Column(db.String(80), unique=True)
+    authenticated = db.Column(db.Boolean, default=False)
+    forms = db.relationship('Form', backref='user', lazy='dynamic')
 
-    def __init__(self, username, email):
+    def __init__(self, username, password):
         self.username = username
-        self.email = email
+        self.password = password
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'authenticated': self.authenticated
+        }
+
+    def is_active(self):
+        """True, as all users are active."""
+        return True
+
+    def get_id(self):
+        """Return the email address to satisfy Flask-Login's requirements."""
+        return unicode(self.id)
+
+    def is_authenticated(self):
+        """Return True if the user is authenticated."""
+        return True
+
+    def is_anonymous(self):
+        """False, as anonymous users aren't supported."""
+        return False
+ 
+    #def get_auth_token(self):
+        #data = [str(self.id), self.password]
+        #return data
+
 

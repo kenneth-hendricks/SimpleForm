@@ -1,5 +1,6 @@
 simpleformsApp.controller('createresponseCtrl', function($scope, $stateParams, $state, ResponseService, FormService) {
 
+    
     var setupResponse = function(form) {
         $scope.response = {};
         $scope.response.formId = form.id;
@@ -18,6 +19,7 @@ simpleformsApp.controller('createresponseCtrl', function($scope, $stateParams, $
             }
         }
     };
+    
 
 
     FormService.getForm($stateParams.formId)

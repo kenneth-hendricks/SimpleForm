@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-md-11">
+    <h3>Question {{$index + 1 }}</h3>
+    <div class="row">
+      <div class="col-md-3">
+        Title
+      </div>
+      <div class="col-md-9">
+        <input type="text" class="form-control" ng-model="question.title" placeholder="Question title" required>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        Type
+      </div>
+      <div class="col-md-9">
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          {{question.type}}
+          <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a href="javascript:void(0);" data-value="action" ng-click="changeQuestionType($parent.$index, $index)" ng-repeat="type in questionTypes">{{type}}</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- question options -->
+    <div class="row" ng-if="question.type == 'Multiple Choice' ||question.type == 'Check Box' || question.type == 'Dropdown'">
+      <div class="col-md-3">
+        Options
+      </div>
+      <div class="col-md-9 options">
+        
+        <div class="input-group" ng-repeat="option in question.options track by $index">
+          <input type="text" class="form-control" ng-model="question.options[$index]" placeholder="Option {{$index + 1}}" required>
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button" ng-click="removeOption($parent.$index, $index)" ng-disabled="minimumOptions($parent.$index)"><span class="glyphicon glyphicon-minus"></span></button>
+          </span>
+        </div>
+        <div class="text-center">
+          <button type="button" class="btn btn-default" ng-click="addOption($parent.$index)">
+          Add Option
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-1 question-buttons">
+    <button type="button" class="btn btn-default" ng-click="removeQuestion($index)">
+    <span class="glyphicon glyphicon-remove"></span>
+    </button>
+    <button type="button" class="btn btn-default" ng-click="duplicateQuestion($index)">
+    <span class="glyphicon glyphicon-duplicate" ></span>
+    </button>
+    <button type="button" class="btn btn-default" ng-click="addQuestionAfter($index)">
+    <span class="glyphicon glyphicon-plus"></span>
+    </button>
+  </div>
+</div>

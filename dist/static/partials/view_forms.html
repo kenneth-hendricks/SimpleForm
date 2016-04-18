@@ -10,27 +10,32 @@
             <div class="form" ng-repeat="form in forms" ng-show="isActiveForm($index)">
                 <h3>{{form.title}}</h3>
                 <p>{{form.description}}</p>
+                <p>{{form.created_date}}
+                <div class="create=response">
                 <a ui-sref="create_response({formId: form.id})">Form Link</a>
-                
+                </div>
+                <div class="responses" ng-show="form.responses.length > 0">
                 <h4> Form Responses: </h4>
                 <table class="table">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Created</th>
-                            <th>View Response</th>
+                            <th>Response</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="response in form.responses">
-                            <th scope="row">1</th>
+                            <th>{{$index + 1}}</th>
                             <td>{{response.created_date}}</td>
                             <td>
-                                <button type="button" class="btn btn-default" ui-sref="view_response({responseId: response.id})">View Response</button>
+                                <a ui-sref="view_response({responseId: response.id})">Response</a>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+                </div>
+
                 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#previewModal{{$index}}">Preview Form</button>
                 <button type="button" class="btn btn-danger" ng-click="deleteForm($index)">Delete Form</button>
                 <div class="modal fade" id="previewModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -64,16 +69,11 @@
                                         </div>
                                     </div>
                                     <div class="dropdown-question" ng-show="question.type === 'Dropdown'">
-                                        <div class="dropdown">
-                                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                                            Select an option
-                                            <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="javascript:void(0);" data-value="{{option.text}}" ng-repeat="option in question.options">{{option.text}}</a></li>
-                                            </ul>
-                                        </div>
+                                        <select class="form-control">
+                                            <option value="{{option.text}}" ng-repeat="option in question.options">{{option.text}}</option>
+                                        </select>
                                     </div>
+
                                 </div>
                             </div>
                             <div class="modal-footer">

@@ -5,32 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SimpleForm</title>
-
     <link rel="stylesheet" href="../static/css/site.css"/>
-
   </head>
   <body ng-app="simpleformsApp">
     <div class="container">
       
-      <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#">SimpleForm</a>
-          </div>
-          <ul class="nav navbar-nav">
-            <li><a ui-sref="create_form">Create Form</a></li>
-            <li><a ui-sref="view_forms">View Forms</a></li>
-            <li><a ui-sref="analyse_responses">Analyse Responses</a></li>
-          </ul>
-        </div>
-      </nav>
+    <sf-nav></sf-nav>
       
-      <div ui-view></div>
-
+    <div ui-view></div>
     </div>
     <script src="../static/js/vendor/vendor.js"></script>
     
     <script src="../static/js/site.js"></script>
-
   </body>
 </html>

@@ -2,9 +2,9 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3 well">
             <form name="newResponse" ng-submit="submitResponse()">
-                <div class="form-header">
+                <div class="form-header text-center">
                     <h1>{{form.title}}</h1>
-                    <p>{{form.description}}<p>
+                    <p><em>{{form.description}}</em><p>
                     </div>
                     <div class="form-body">
                         <div class="question" ng-repeat="question in form.questions">
@@ -14,7 +14,7 @@
                                 <input type="text" class="form-control" ng-model="response.question_answers[$index].answers[0]">
                             </div>
                             <div class="paragraph-question" ng-show="question.type === 'Paragraph'">
-                                <textarea class="form-control" ng-model="response.question_answers[$index].answer[0]"></textarea>
+                                <textarea class="form-control" ng-model="response.question_answers[$index].answers[0]"></textarea>
                             </div>
                             <div class="multiple-choice-question" ng-show="question.type === 'Multiple Choice'">
                                 <div class="radio" ng-repeat="option in question.options">
