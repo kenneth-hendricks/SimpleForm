@@ -15,6 +15,7 @@ simpleformsApp.config(function($stateProvider, $urlRouterProvider, $httpProvider
         .state('create_form', {
             url: "/create_form",
             templateUrl: "../static/partials/create_form.html",
+            controller: "createformCtrl",
             data: {
                 requireLogin: true
             }
@@ -22,6 +23,7 @@ simpleformsApp.config(function($stateProvider, $urlRouterProvider, $httpProvider
         .state('view_forms', {
             url: "/view_forms",
             templateUrl: "../static/partials/view_forms.html",
+            controller: "viewformsCtrl",
             params: {
                 formId: null
             },
