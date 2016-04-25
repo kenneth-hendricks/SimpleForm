@@ -7,7 +7,7 @@ class Form(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
     description = db.Column(db.String(500))
-    created_date = db.Column(db.String)
+    created_date = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     questions = db.relationship('Question', backref='form', lazy='dynamic')
     responses = db.relationship('Response', backref='form', lazy='dynamic')

@@ -6,7 +6,7 @@ from models import db, Form, User, Option, Question, Response, QuestionAnswer, A
 import os
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://b3b69105f63173:165a3b64@us-cdbr-iron-east-03.cleardb.net/heroku_53706f7cc06df57'
 db.init_app(app)
 
 migrate = Migrate(app, db)

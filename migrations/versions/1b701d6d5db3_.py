@@ -1,13 +1,13 @@
 """empty message
 
-Revision ID: f3f8bac7ba1c
+Revision ID: 1b701d6d5db3
 Revises: None
-Create Date: 2016-04-07 16:52:28.638848
+Create Date: 2016-04-26 09:33:23.595781
 
 """
 
 # revision identifiers, used by Alembic.
-revision = 'f3f8bac7ba1c'
+revision = '1b701d6d5db3'
 down_revision = None
 
 from alembic import op
@@ -21,15 +21,9 @@ def upgrade():
     sa.Column('title', sa.String(length=100), nullable=True),
     sa.Column('description', sa.String(length=500), nullable=True),
     sa.Column('created_date', sa.DateTime(), nullable=True),
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
-    )
-    op.create_table('user',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('username', sa.String(length=80), nullable=True),
-    sa.Column('password', sa.String(length=80), nullable=True),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('password'),
-    sa.UniqueConstraint('username')
     )
     op.create_table('question',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -78,6 +72,5 @@ def downgrade():
     op.drop_table('option')
     op.drop_table('response')
     op.drop_table('question')
-    op.drop_table('user')
     op.drop_table('form')
     ### end Alembic commands ###
